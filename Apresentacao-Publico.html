@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Público · PRF+ — Keynote de Lançamento</title>
+<style>
+  :root {
+    --bg: #05060f;
+    --ink: #f5f5f7;
+    --muted: rgba(245,245,247,.62);
+    --faint: rgba(245,245,247,.38);
+    --blue: #2f6bff;
+    --violet: #8b5cf6;
+    --magenta: #e040a0;
+    --green: #30d158;
+    --card: rgba(255,255,255,.055);
+    --card-border: rgba(255,255,255,.09);
+    --radius: 28px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { height:100%; overflow:hidden; background:var(--bg); }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Inter, Roboto, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ambient gradient (ENATIC style) */
+  .ambient {
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(900px 700px at 88% 96%, rgba(224,64,160,.30), transparent 60%),
+      radial-gradient(1000px 800px at 78% 60%, rgba(139,92,246,.26), transparent 60%),
+      radial-gradient(900px 700px at 6% 88%, rgba(72,48,220,.28), transparent 60%),
+      radial-gradient(1100px 800px at 70% 6%, rgba(20,40,180,.35), transparent 65%),
+      #05060f;
+  }
+  .ambient::after {
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(1200px 700px at 50% 40%, transparent 40%, rgba(0,0,0,.45));
+  }
+
+  .deck { position:relative; z-index:1; height:100%; }
+
+  section.slide {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding: 5vh 7vw;
+    opacity:0; transform: scale(.985) translateY(12px);
+    transition: opacity .65s cubic-bezier(.2,.7,.2,1), transform .65s cubic-bezier(.2,.7,.2,1);
+    pointer-events:none; text-align:center;
+  }
+  section.slide.active { opacity:1; transform:none; pointer-events:auto; }
+
+  .kicker {
+    font-size: clamp(13px, 1.15vw, 18px);
+    letter-spacing:.22em; text-transform:uppercase;
+    color:var(--faint); font-weight:600; margin-bottom:2.2vh;
+  }
+  h1 {
+    font-size: clamp(48px, 7.4vw, 128px);
+    font-weight:700; letter-spacing:-.03em; line-height:1.02;
+  }
+  h2 {
+    font-size: clamp(36px, 5vw, 84px);
+    font-weight:700; letter-spacing:-.025em; line-height:1.05;
+  }
+  .grad {
+    background: linear-gradient(92deg, #5ea2ff 0%, #8b5cf6 45%, #e040a0 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .grad-cool {
+    background: linear-gradient(92deg, #7dd3fc, #5ea2ff 55%, #8b5cf6);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .grad-warm {
+    background: linear-gradient(92deg, #8b5cf6, #e040a0 60%, #ff7a59);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub {
+    margin-top:2.6vh; font-size: clamp(17px, 1.7vw, 28px);
+    color:var(--muted); font-weight:400; max-width:62ch; line-height:1.45;
+  }
+  .sub strong { color:var(--ink); font-weight:600; }
+
+  /* bento grid */
+  .bento {
+    display:grid; gap:14px; width:min(94vw, 1500px); margin-top:4.5vh;
+  }
+  .cell {
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:var(--radius);
+    padding: clamp(18px, 2.2vw, 34px);
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    gap:8px; backdrop-filter: blur(18px);
+    text-align:center; min-height:0;
+  }
+  .cell .big {
+    font-size: clamp(30px, 3.6vw, 62px); font-weight:700; letter-spacing:-.02em; line-height:1.05;
+  }
+  .cell .mid { font-size: clamp(20px, 2vw, 32px); font-weight:650; letter-spacing:-.015em; }
+  .cell .lbl { font-size: clamp(13px, 1.1vw, 18px); color:var(--muted); line-height:1.4; }
+  .cell .ico { font-size: clamp(26px, 2.6vw, 44px); line-height:1; color:#8fb0ff; }
+  .ico svg, .row .ico svg { width:1em; height:1em; display:block; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+  .brand svg { fill:currentColor; stroke:none; }
+  .stores { display:flex; gap:16px; justify-content:center; margin-top:3.4vh; flex-wrap:wrap; }
+  .badge { display:inline-flex; align-items:center; gap:12px; padding:12px 22px; border-radius:16px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); }
+  .badge .ico { font-size:30px; color:#fff; line-height:1; }
+  .badge b { font-size:clamp(15px,1.3vw,20px); font-weight:600; letter-spacing:.2px; }
+  .badge small { display:block; font-size:.62em; font-weight:500; opacity:.7; letter-spacing:.4px; }
+  .video-frame { width:min(62vw,860px); aspect-ratio:16/9; border-radius:24px; border:1px solid rgba(255,255,255,.14); background:linear-gradient(135deg,rgba(47,107,255,.18),rgba(139,92,246,.14),rgba(224,64,160,.16)); display:flex; align-items:center; justify-content:center; box-shadow:0 30px 90px rgba(0,0,0,.5); margin:1vh auto 0; }
+  .play-btn { width:clamp(84px,7vw,116px); height:clamp(84px,7vw,116px); border-radius:50%; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.35); display:flex; align-items:center; justify-content:center; }
+  .play-btn .ico { font-size:clamp(34px,3vw,46px); color:#fff; margin-left:.1em; }
+  .cell.hero-cell { background:linear-gradient(135deg, rgba(94,162,255,.14), rgba(224,64,160,.12)); }
+
+  .cols-3 { grid-template-columns:repeat(3, 1fr); }
+  .cols-4 { grid-template-columns:repeat(4, 1fr); }
+  .cols-2 { grid-template-columns:repeat(2, 1fr); }
+  .span2 { grid-column: span 2; }
+
+  /* list slide */
+  .rows { display:flex; flex-direction:column; gap:12px; width:min(88vw, 1080px); margin-top:4vh; }
+  .row {
+    display:flex; align-items:center; gap:20px; text-align:left;
+    background:var(--card); border:1px solid var(--card-border);
+    border-radius:20px; padding:16px 26px; backdrop-filter:blur(18px);
+  }
+  .row .ico { font-size:clamp(22px,2vw,32px); flex:0 0 auto; }
+  .row .t { font-size:clamp(16px,1.5vw,24px); font-weight:600; }
+  .row .d { font-size:clamp(13px,1.15vw,18px); color:var(--muted); margin-top:2px; }
+
+  /* comparison */
+  .versus { display:grid; grid-template-columns:1fr 1fr; gap:16px; width:min(92vw,1360px); margin-top:4vh; }
+  .vcard {
+    border-radius:var(--radius); padding:clamp(20px,2.4vw,36px);
+    text-align:left; backdrop-filter:blur(18px);
+  }
+  .vcard.old { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); }
+  .vcard.new { background:linear-gradient(160deg, rgba(94,162,255,.16), rgba(224,64,160,.13)); border:1px solid rgba(139,92,246,.35); }
+  .vcard h3 { font-size:clamp(20px,1.9vw,30px); font-weight:700; margin-bottom:14px; letter-spacing:-.015em; }
+  .vcard ul { list-style:none; }
+  .vcard li { font-size:clamp(14px,1.25vw,20px); color:var(--muted); padding:7px 0; display:flex; gap:12px; align-items:baseline; }
+  .vcard.new li { color:rgba(245,245,247,.85); }
+  .vcard li::before { content:"—"; color:var(--faint); flex:0 0 auto; }
+  .vcard.new li::before { content:"✓"; color:var(--green); font-weight:700; }
+
+  /* timeline */
+  .timeline { display:flex; gap:12px; width:min(94vw,1500px); margin-top:5vh; }
+  .tstep {
+    flex:1; background:var(--card); border:1px solid var(--card-border);
+    border-radius:22px; padding:clamp(16px,1.8vw,28px); text-align:left; backdrop-filter:blur(18px);
+    position:relative;
+  }
+  .tstep .when { font-size:clamp(12px,1vw,15px); letter-spacing:.14em; text-transform:uppercase; color:var(--faint); font-weight:700; }
+  .tstep .what { font-size:clamp(16px,1.45vw,23px); font-weight:650; margin-top:6px; letter-spacing:-.01em; }
+  .tstep .how { font-size:clamp(12px,1.05vw,16px); color:var(--muted); margin-top:6px; line-height:1.4; }
+  .tstep.now { background:linear-gradient(150deg, rgba(94,162,255,.18), rgba(224,64,160,.14)); border-color:rgba(139,92,246,.4); }
+
+  /* big stat */
+  .stat-huge { font-size:clamp(90px, 14vw, 260px); font-weight:750; letter-spacing:-.045em; line-height:1; }
+  .stat-cap { font-size:clamp(18px, 1.9vw, 32px); color:var(--muted); margin-top:1.4vh; }
+
+  /* phone mock */
+  .phone {
+    width:clamp(150px, 15vw, 230px); aspect-ratio: 921/2000; /* iPhone 17 Pro Max */
+    border-radius:36px; border:3px solid rgba(255,255,255,.22);
+    background:linear-gradient(170deg, #101632, #1c1040 55%, #3d1140);
+    box-shadow: 0 40px 120px rgba(139,92,246,.35), inset 0 0 60px rgba(94,162,255,.12);
+    position:relative; margin-top:4vh; overflow:hidden;
+  }
+  .phone img {
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; border-radius:33px; display:block;
+  }
+  .phone::before {
+    content:""; position:absolute; top:12px; left:50%; transform:translateX(-50%);
+    width:34%; height:14px; border-radius:10px; background:rgba(0,0,0,.7); z-index:2;
+  }
+  .phone .logo {
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size:clamp(30px,3.4vw,52px); font-weight:800; letter-spacing:-.03em;
+  }
+
+  footer.hud {
+    position:fixed; bottom:18px; left:0; right:0; z-index:5;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:0 28px; font-size:12px; color:var(--faint); letter-spacing:.08em;
+  }
+  .progress {
+    position:fixed; top:0; left:0; height:3px; z-index:5;
+    background:linear-gradient(90deg, #5ea2ff, #8b5cf6, #e040a0);
+    transition:width .4s ease; width:0;
+  }
+  .hint { text-transform:uppercase; }
+
+  .brandline { display:flex; gap:14px; align-items:center; justify-content:center; margin-bottom:3.5vh; color:var(--faint); font-weight:600; letter-spacing:.2em; text-transform:uppercase; font-size:clamp(12px,1vw,15px); }
+  .brandline .sep { opacity:.4; }
+
+  /* talking points (lembretes do apresentador) — tecla T alterna */
+  .tp {
+    position:absolute; bottom:5.5vh; left:50%; transform:translateX(-50%);
+    display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
+    max-width:88vw; transition:opacity .3s ease;
+  }
+  .tp span {
+    font-size:clamp(11px, .95vw, 14px); font-weight:500;
+    color:rgba(245,245,247,.55);
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:999px; padding:6px 14px;
+    backdrop-filter:blur(12px); white-space:nowrap;
+  }
+  body.tp-hidden .tp { opacity:0; pointer-events:none; }
+
+  @media (max-width:900px) {
+    .cols-4 { grid-template-columns:repeat(2,1fr); }
+    .cols-3 { grid-template-columns:1fr; }
+    .versus { grid-template-columns:1fr; }
+    .timeline { flex-direction:column; }
+  }
+</style>
+<style>
+  body.preview-mode .hud, body.preview-mode #progress { display:none !important; }
+  body.preview-mode { cursor:default; }
+</style>
+</head>
+<body>
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-phone-off" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="2" y1="2" x2="22" y2="22"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11.5 11 13.5 15 9.5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></symbol>
+  <symbol id="i-printer" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+  <symbol id="i-landmark" viewBox="0 0 24 24"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 17H3v-4l2-5h12l2 5v4h-2"/><path d="M5 13h14"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/><path d="M9 17h6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 12"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24"><path d="M16.36 12.9c-.02-2.02 1.65-2.99 1.72-3.04-.94-1.37-2.4-1.56-2.92-1.58-1.24-.13-2.42.73-3.05.73-.63 0-1.6-.71-2.63-.69-1.35.02-2.6.79-3.3 2-1.41 2.44-.36 6.05 1.01 8.03.67.97 1.47 2.06 2.51 2.02 1.01-.04 1.39-.65 2.61-.65 1.22 0 1.56.65 2.63.63 1.09-.02 1.78-.99 2.44-1.96.77-1.12 1.09-2.21 1.11-2.27-.02-.01-2.13-.82-2.15-3.25zM14.38 6.65c.56-.68.94-1.62.84-2.56-.81.03-1.79.54-2.37 1.22-.52.6-.98 1.56-.86 2.48.9.07 1.83-.46 2.39-1.14z"/></symbol>
+  <symbol id="i-gplay" viewBox="0 0 24 24"><path d="M3.5 2.1c-.3.2-.5.6-.5 1.1v17.6c0 .5.2.9.5 1.1l9.6-9.9-9.6-9.9zM14.5 13.2l2.4 2.5-9.9 5.6 7.5-8.1zM17.9 9.4l2.9 1.7c.6.4.6 1.4 0 1.8l-2.9 1.7-2.6-2.6 2.6-2.6zM14.5 10.8l-7.5-8.1 9.9 5.6-2.4 2.5z"/></symbol>
+  <symbol id="i-wifi-off" viewBox="0 0 24 24"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/><path d="M10.71 5.05A16 16 0 0 1 22.58 9"/><path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></symbol>
+</svg>
+<div class="ambient"></div>
+<div class="progress" id="progress"></div>
+
+<div class="deck" id="deck">
+
+<!-- 1 · ABERTURA -->
+<section class="slide">
+  <div class="brandline"><span>ENATIC 2026</span><span class="sep">•</span><span>DTIC — Polícia Rodoviária Federal</span></div>
+  <h1><span class="grad">PRF+</span></h1>
+  <p class="sub">O novo ecossistema digital da atividade policial.</p>
+</section>
+
+<!-- 2 · FRASE DE IMPACTO -->
+<section class="slide">
+  <h2>Não é apenas<br>um aplicativo.</h2>
+  <p class="sub">É a maior modernização tecnológica da atividade-fim da PRF<br>na última década.</p>
+</section>
+
+<!-- 3 · CONTEXTO: NÚMERO -->
+<section class="slide">
+  <div class="kicker">Todos os dias</div>
+  <div class="stat-huge grad-cool">13.000</div>
+  <p class="stat-cap">policiais dependem de um aplicativo para trabalhar.<br>Consultas, abordagens, autuações. Na estrada. Agora.</p>
+</section>
+
+<!-- 4 · CONTEXTO ATUAL -->
+<section class="slide">
+  <div class="kicker">O ponto de partida</div>
+  <h2>Um cenário que<br>pedia evolução.</h2>
+  <p class="sub" style="margin-bottom:2.4vh;">O PRF Móvel, desenvolvido e mantido pela própria PRF, sustenta a operação há anos.<br>A demanda cresceu — e, com ela, a necessidade de evoluir a plataforma.</p>
+  <div class="bento cols-4">
+    <div class="cell"><span class="ico"><svg><use href="#i-phone-off"/></svg></span><span class="mid">Só Android</span><span class="lbl">Nenhuma versão para iOS. Pouca flexibilidade de dispositivos.</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-layers"/></svg></span><span class="mid">Arquitetura monolítica</span><span class="lbl">Evoluções exigiam mudanças no sistema inteiro.</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-help"/></svg></span><span class="mid">Observabilidade limitada</span><span class="lbl">Falhas de integração eram difíceis de detectar em tempo real.</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-search"/></svg></span><span class="mid">Auditoria limitada</span><span class="lbl">Trilhas de ações sensíveis podiam ser mais completas.</span></div>
+  </div>
+</section>
+
+<!-- 5 · A DECISÃO -->
+<section class="slide">
+  <h2>Então tomamos<br>uma decisão: <span class="grad-warm">assumir.</span></h2>
+  <p class="sub">Internalizamos o projeto que deu origem ao PRF+ — iniciado em parceria entre Instituto e PRF.<br>Adquirimos domínio sobre arquitetura e operação. E o reestruturamos — <strong>do nosso jeito</strong>.</p>
+</section>
+
+<!-- 6 · TIMELINE -->
+<section class="slide">
+  <div class="kicker">A jornada</div>
+  <h2>De projeto em parceria a <span class="grad">plataforma soberana</span>.</h2>
+  <div class="timeline">
+    <div class="tstep"><div class="when">Origem</div><div class="what">Parceria Instituto + PRF</div><div class="how">Projeto nascido em parceria, sobre uma base tecnicamente bem construída, na nuvem externa.</div></div>
+    <div class="tstep"><div class="when">Internalização</div><div class="what">Domínio da solução</div><div class="how">Compreensão profunda de componentes e fluxos, com reescrita de grande parte da solução.</div></div>
+    <div class="tstep"><div class="when">Migração</div><div class="what">Data center PRF</div><div class="how">Saída da nuvem externa. Economia direta e soberania sobre dados policiais.</div></div>
+    <div class="tstep"><div class="when">Reestruturação</div><div class="what">Plataforma moderna</div><div class="how">App multiplataforma, serviços independentes e entrega contínua.</div></div>
+    <div class="tstep now"><div class="when">Hoje</div><div class="what">PRF+</div><div class="how">Equipe mista, documentação como pré-requisito, review IA + humano, entregas semanais.</div></div>
+  </div>
+</section>
+
+<!-- 7 · HERO REVEAL -->
+<section class="slide">
+  <div class="kicker">Apresentando</div>
+  <h1><span class="grad">PRF+</span></h1>
+  <div class="phone"><img src="img/app-home.png" alt="Tela inicial do PRF+"></div>
+</section>
+
+<!-- 8 · PILARES -->
+<section class="slide">
+  <h2>Cinco pilares.<br><span class="grad-cool">Um propósito.</span></h2>
+  <div class="bento cols-4" style="grid-template-columns:repeat(5,1fr);">
+    <div class="cell"><span class="ico"><svg><use href="#i-shield"/></svg></span><span class="mid">Confiável</span><span class="lbl">Fontes autoritativas, em tempo real, com degradação graciosa.</span></div>
+    <div class="cell"><span class="ico brand" style="display:inline-flex;gap:.24em;"><svg><use href="#i-apple"/></svg><svg><use href="#i-gplay"/></svg></span><span class="mid">Multiplataforma</span><span class="lbl">Android e iOS a partir de uma única base de código.</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-wifi-off"/></svg></span><span class="mid">Offline-first</span><span class="lbl">O policial não fica refém de cobertura móvel.</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-cpu"/></svg></span><span class="mid">Inteligente</span><span class="lbl">IA embarcada auxiliando a decisão em campo.</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-lock"/></svg></span><span class="mid">Auditável</span><span class="lbl">Toda ação relevante em trilha imutável.</span></div>
+  </div>
+</section>
+
+<!-- 9 · MULTIPLATAFORMA -->
+<section class="slide">
+  <div class="kicker">Pela primeira vez</div>
+  <h2>Android <span class="grad">e iOS</span>.</h2>
+  <p class="sub">Uma única base de código Flutter. Paridade total entre plataformas.<br>Liberdade para padronizar os dispositivos institucionais.</p>
+  <div class="stores">
+    <span class="badge"><span class="ico brand"><svg><use href="#i-apple"/></svg></span><b><small>Disponível na</small>App Store</b></span>
+    <span class="badge"><span class="ico brand"><svg><use href="#i-gplay"/></svg></span><b><small>Disponível no</small>Google Play</b></span>
+  </div>
+</section>
+
+<!-- 10 · OFFLINE -->
+<section class="slide">
+  <div class="kicker">Feito para a estrada</div>
+  <h2>Sem sinal?<br><span class="grad-cool">Sem problema.</span></h2>
+  <p class="sub">Offline-first por design. Capturas, consultas em cache e eventos ficam<br>armazenados no dispositivo — e sincronizam sozinhos quando a rede volta.</p>
+</section>
+
+<!-- 11 · BUSCA V3 -->
+<section class="slide">
+  <div class="kicker">Consulta de Pessoa V3</div>
+  <div class="stat-huge grad" style="font-size:clamp(48px,7vw,120px);">Fontes de dados</div>
+  <p class="stat-cap">consultadas em paralelo, em uma única requisição. Entre elas:</p>
+  <div class="bento cols-3" style="width:min(88vw,1100px);">
+    <div class="cell"><span class="mid">Motor PESSOA</span></div>
+    <div class="cell"><span class="mid">BNMP</span><span class="lbl">Mandados de prisão</span></div>
+    <div class="cell"><span class="mid">RENACH</span><span class="lbl">CNH e condutores</span></div>
+    <div class="cell"><span class="mid">Motor VEÍCULOS</span></div>
+    <div class="cell"><span class="mid">Motor REGISTROS</span></div>
+    <div class="cell"><span class="mid">Sinal Desaparecidos</span></div>
+  </div>
+  <p class="stat-cap" style="margin-top:1.6vh; font-size:clamp(18px,2vw,30px);">…e outras fontes integradas à plataforma.</p>
+</section>
+
+<!-- 12 · TALÃO -->
+<section class="slide">
+  <div class="kicker">AutoPRF v2</div>
+  <h2>O talão eletrônico,<br><span class="grad-warm">reinventado.</span></h2>
+  <div class="bento cols-3">
+    <div class="cell"><span class="ico"><svg><use href="#i-edit"/></svg></span><span class="mid">Lavratura completa</span><span class="lbl">Auto de infração CTB e medições, de ponta a ponta no app.</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-printer"/></svg></span><span class="mid">Impressão em campo</span><span class="lbl">Integração com impressoras térmicas Zebra. Documento entregue na hora.</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-landmark"/></svg></span><span class="mid">Rumo à SENATRAN</span><span class="lbl">Em homologação junto à área negocial para certificação nacional.</span></div>
+  </div>
+</section>
+
+<!-- 13 · IA -->
+<section class="slide">
+  <div class="kicker">Inteligência artificial</div>
+  <h2>IA que trabalha<br><span class="grad">dentro da viatura.</span></h2>
+  <div class="bento cols-2" style="width:min(80vw,1000px);">
+    <div class="cell hero-cell"><span class="ico"><svg><use href="#i-car"/></svg></span><span class="mid">OCR de placas</span><span class="lbl">Leitura automática de placas no próprio dispositivo. Sem depender de rede.</span></div>
+    <div class="cell hero-cell"><span class="ico"><svg><use href="#i-user"/></svg></span><span class="mid">Reconhecimento facial</span><span class="lbl">Apoio à identificação em abordagens, processado no próprio aparelho.</span></div>
+  </div>
+</section>
+
+<!-- 14 · FISCALIZAÇÃO -->
+<section class="slide">
+  <div class="kicker">Fiscalização com abordagem</div>
+  <h2>Um fluxo único.<br><span class="grad-cool">Tudo conectado.</span></h2>
+  <p class="sub">Pessoa, veículo, veículos atrelados, fotos e GPS —<br>integrados em uma só operação, com armazenamento offline.</p>
+</section>
+
+<!-- 15 · GESTÃO -->
+<section class="slide">
+  <div class="kicker">Para a gestão</div>
+  <h2>Visibilidade total<br>do que acontece <span class="grad-warm">em campo.</span></h2>
+  <div class="bento cols-4">
+    <div class="cell"><span class="ico"><svg><use href="#i-users"/></svg></span><span class="lbl"><strong style="color:var(--ink)">Gestão de usuários e perfis</strong><br>com inbox de aprovação</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-map"/></svg></span><span class="lbl"><strong style="color:var(--ink)">Indicadores agregados de operação</strong><br>disponibilidade e uso, sem identificação individual</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-chart"/></svg></span><span class="lbl"><strong style="color:var(--ink)">Dashboards operacionais</strong><br>consolidados</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-sliders"/></svg></span><span class="lbl"><strong style="color:var(--ink)">Feature flags</strong><br>ativação controlada por perfil e ambiente</span></div>
+  </div>
+</section>
+
+<!-- 16 · TRANSIÇÃO ARQUITETURA -->
+<section class="slide">
+  <h2>E por baixo disso tudo,<br><span class="grad">uma nova arquitetura.</span></h2>
+</section>
+
+<!-- 17 · MICROSSERVIÇOS -->
+<section class="slide">
+  <div class="kicker">Backend</div>
+  <div class="stat-huge grad-cool">19</div>
+  <p class="stat-cap">microsserviços independentes. Escaláveis por demanda.<br>De monolito a plataforma que cresce junto com a instituição.</p>
+</section>
+
+<!-- 18 · STACK -->
+<section class="slide">
+  <div class="kicker">Tecnologia</div>
+  <h2>Moderno de ponta a ponta.</h2>
+  <div class="bento cols-3">
+    <div class="cell"><span class="ico"><svg><use href="#i-phone"/></svg></span><span class="mid">Aplicativo</span><span class="lbl">Multiplataforma, com arquitetura limpa e funcionamento offline</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-gear"/></svg></span><span class="mid">Plataforma de serviços</span><span class="lbl">Escalável, segura e integrada às bases institucionais</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-monitor"/></svg></span><span class="mid">Painel de gestão</span><span class="lbl">Administração moderna, preparada para evolução contínua</span></div>
+  </div>
+</section>
+
+<!-- 19 · SOBERANIA -->
+<section class="slide">
+  <div class="kicker">Infraestrutura</div>
+  <h2>Dados policiais,<br><span class="grad">em casa.</span></h2>
+  <p class="sub">Infraestrutura no data center da própria PRF.<br><strong>Soberania sobre os dados</strong>, mais governança e controle sobre a solução —<br>e <strong>economia direta</strong> com a redução de infraestrutura externa contratada.</p>
+</section>
+
+<!-- 20 · DEVOPS -->
+<section class="slide">
+  <div class="kicker">Esteira DevOps</div>
+  <h2>Do commit ao campo,<br><span class="grad-cool">sem intervenção manual.</span></h2>
+  <div class="bento cols-4">
+    <div class="cell"><span class="ico"><svg><use href="#i-refresh"/></svg></span><span class="mid">Entrega automatizada</span><span class="lbl">Do repositório à produção, sem passos manuais</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-shield-check"/></svg></span><span class="mid">Segurança contínua</span><span class="lbl">Análise automática de vulnerabilidades em cada versão</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-tag"/></svg></span><span class="mid">Rastreabilidade total</span><span class="lbl">Do planejamento à entrega em produção</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-box"/></svg></span><span class="mid">Entregas semanais</span><span class="lbl">Novidades consolidadas a cada janela</span></div>
+  </div>
+</section>
+
+<!-- 21 · REVIEW IA -->
+<section class="slide">
+  <div class="kicker">Qualidade de código</div>
+  <h2>Review híbrido:<br><span class="grad-warm">IA + humano.</span></h2>
+  <p class="sub">GitHub Copilot revisa cada pull request com instruções customizadas.<br>Depois, revisão humana obrigatória antes de qualquer merge.<br><strong>Nada entra em produção sem passar pelos dois.</strong></p>
+</section>
+
+<!-- 22 · DOCUMENTAÇÃO -->
+<section class="slide">
+  <div class="kicker">Impessoalidade por design</div>
+  <h2>Documentação primeiro.<br><span class="grad">Código depois.</span></h2>
+  <div class="bento cols-3">
+    <div class="cell"><span class="mid">SDD</span><span class="lbl">Solution Design: arquitetura, contratos de API, modelo de dados, rollout</span></div>
+    <div class="cell"><span class="mid">GDD</span><span class="lbl">Granular Design: tasks atômicas com critérios de aceite objetivos</span></div>
+    <div class="cell"><span class="mid">ADRs</span><span class="lbl">Decisões arquiteturais registradas com contexto e alternativas</span></div>
+  </div>
+  <p class="sub" style="margin-top:3vh">O conhecimento pertence à <strong>instituição</strong> — não a pessoas.</p>
+</section>
+
+<!-- 23 · SEGURANÇA -->
+<section class="slide">
+  <div class="kicker">Segurança e auditoria</div>
+  <h2>Cada ação,<br><span class="grad-cool">gravada para sempre.</span></h2>
+  <div class="bento cols-3">
+    <div class="cell"><span class="ico"><svg><use href="#i-link"/></svg></span><span class="mid">Hash chain</span><span class="lbl">Trilha de auditoria imutável e verificável, com acesso restrito por papel</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-key"/></svg></span><span class="mid">SouGov + PRF Segurança</span><span class="lbl">Autenticação institucional federada, com sessões de curta duração e compatibilidade preservada</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-check"/></svg></span><span class="mid">LGPD nativa</span><span class="lbl">Retenção controlada e expurgo automático de dados sensíveis</span></div>
+  </div>
+</section>
+
+<!-- 24 · OBSERVABILIDADE -->
+<section class="slide">
+  <div class="kicker">Observabilidade ponta a ponta</div>
+  <h2>Se algo falhar,<br><span class="grad-warm">nós sabemos primeiro.</span></h2>
+  <p class="sub">Erros, logs e métricas centralizados — do app na estrada ao pod no cluster.<br>Runbooks prontos para cada alerta crítico.<br><strong>O fim da era em que o policial descobria o problema antes da TI.</strong></p>
+</section>
+
+<!-- 25 · COMPARATIVO -->
+<section class="slide">
+  <h2>Legado <span style="color:var(--faint)">vs</span> <span class="grad">PRF+</span></h2>
+  <div class="versus">
+    <div class="vcard old">
+      <h3 style="color:var(--muted)">Cenário anterior</h3>
+      <ul>
+        <li>Android, plataforma única</li>
+        <li>Arquitetura monolítica</li>
+        <li>Infraestrutura em nuvem externa</li>
+        <li>Observabilidade limitada</li>
+        <li>Auditoria limitada</li>
+        <li>Evoluções mais lentas e acopladas</li>
+      </ul>
+    </div>
+    <div class="vcard new">
+      <h3 class="grad">PRF+</h3>
+      <ul>
+        <li>Android + iOS, base única</li>
+        <li>Serviços independentes e escaláveis</li>
+        <li>Data center da própria PRF</li>
+        <li>Observabilidade ponta a ponta</li>
+        <li>Trilha de auditoria imutável</li>
+        <li>Entregas contínuas e documentadas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 26 · NÚMEROS DO PROJETO -->
+<section class="slide">
+  <div class="kicker">O projeto em números</div>
+  <div class="bento cols-4" style="margin-top:2vh;">
+    <div class="cell hero-cell"><span class="big grad-cool">36%</span><span class="lbl">de economia em horas de desenvolvimento vs. manter sistemas separados</span></div>
+    <div class="cell"><span class="big">11.280h</span><span class="lbl">de esforço estimado nas fases 0 a 2</span></div>
+    <div class="cell"><span class="big">99%+</span><span class="lbl">de disponibilidade como critério de aceitação</span></div>
+    <div class="cell"><span class="big">&lt; 3s</span><span class="lbl">de resposta em operações críticas</span></div>
+    <div class="cell"><span class="big">100%</span><span class="lbl">de paridade funcional com o legado</span></div>
+    <div class="cell"><span class="big">85+</span><span class="lbl">sistemas e APIs integrados</span></div>
+    <div class="cell"><span class="big">11</span><span class="lbl">frentes ativas de remediação de segurança</span></div>
+    <div class="cell hero-cell"><span class="big grad-warm">13.000</span><span class="lbl">policiais no go-live total</span></div>
+  </div>
+</section>
+
+<!-- 27 · ROADMAP -->
+<section class="slide">
+  <div class="kicker">O caminho até dezembro</div>
+  <h2>Rollout <span class="grad-cool">controlado</span>.</h2>
+  <div class="timeline">
+    <div class="tstep now"><div class="when">18 · AGO · 2026</div><div class="what">Apresentação</div><div class="how">O PRF+ é apresentado ao público. Hoje.</div></div>
+    <div class="tstep"><div class="when">SET 2026</div><div class="what">Projeto Piloto</div><div class="how">20 agentes em unidade selecionada, validação real de campo.</div></div>
+    <div class="tstep"><div class="when">SET – OUT 2026</div><div class="what">Rollout gradual</div><div class="how">Liberação controlada por lotes regionais.</div></div>
+    <div class="tstep"><div class="when">DEZ 2026</div><div class="what">Lançamento</div><div class="how">Versão de produção para 100% dos 13.000 servidores.</div></div>
+    <div class="tstep"><div class="when">2027+</div><div class="what">Fase 3</div><div class="how">Realidade aumentada, comando de voz, IA avançada.</div></div>
+  </div>
+</section>
+
+<!-- 28 · EQUIPE -->
+<section class="slide">
+  <div class="kicker">Quem constrói</div>
+  <h2>Feito <span class="grad">pela PRF</span>,<br>para a PRF.</h2>
+  <p class="sub">Equipe mista — policiais desenvolvedores e fábrica de software —<br>com transferência efetiva de conhecimento para o corpo institucional.<br>DTIC/DIAP · DISTI Segurança · DISTI Infraestrutura · áreas negociais.</p>
+</section>
+
+<!-- 29 · VISÃO -->
+<section class="slide">
+  <h2>Isso não é o fim<br>de um projeto.</h2>
+  <p class="sub">É o começo de uma <strong>plataforma</strong> — a base sobre a qual as próximas<br>ferramentas da atividade policial serão construídas.</p>
+</section>
+
+<!-- 30 · ONE MORE THING -->
+<section class="slide">
+  <h1 style="font-size:clamp(40px,6vw,104px);">One more thing<span class="grad">.</span></h1>
+</section>
+
+<!-- ANTIGÃO · TEASER -->
+<section class="slide">
+  <h1 style="font-size:clamp(56px,10vw,180px);"><span class="grad-warm">Antigão</span></h1>
+</section>
+
+<!-- ANTIGÃO · REVELAÇÃO -->
+<section class="slide">
+  <div class="kicker">Inteligência normativa</div>
+  <h1><span class="grad-warm">Antigão</span></h1>
+  <p class="sub">A IA que auxilia o policial no <strong>enquadramento legal da infração</strong>.</p>
+  <div class="bento cols-3" style="margin-top:3vh;">
+    <div class="cell hero-cell"><span class="ico"><svg><use href="#i-scale"/></svg></span><span class="mid">Enquadramento assistido</span><span class="lbl">Sugestão de norma aplicável no momento da autuação.</span></div>
+    <div class="cell hero-cell"><span class="ico"><svg><use href="#i-search"/></svg></span><span class="mid">Menos tempo na norma</span><span class="lbl">A consulta que levava minutos acontece em segundos.</span></div>
+    <div class="cell hero-cell"><span class="ico"><svg><use href="#i-shield-check"/></svg></span><span class="mid">Mais segurança jurídica</span><span class="lbl">Auto mais preciso, para o agente e para o cidadão.</span></div>
+  </div>
+</section>
+
+<!-- 32 · DATA -->
+<section class="slide">
+  <h1><span class="grad">PRF+</span></h1>
+  <p class="sub" style="font-size:clamp(24px,2.6vw,44px); color:var(--ink); font-weight:600;">Dezembro de 2026.</p>
+  <p class="sub" style="margin-top:1vh;">Na palma da mão de quem protege a estrada.</p>
+</section>
+
+<!-- 31 · OBRIGADO -->
+<section class="slide">
+  <h2>Obrigado.</h2>
+  <p class="sub">Tiago Sousa Amorim · Gerente do Projeto PRF+<br>Iran Barros Lima · Desenvolvedor<br>DTIC — Polícia Rodoviária Federal</p>
+</section>
+
+</div>
+
+<footer class="hud">
+  <span>PRF+ · Keynote de Lançamento</span>
+  <span id="counter"></span>
+  <span class="hint">← → navegar · F tela cheia</span>
+</footer>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  const PREVIEW = location.search.indexOf('role=preview') !== -1;
+  if (PREVIEW) document.body.classList.add('preview-mode');
+  let suppress = false;
+  let bc = null;
+  if (!PREVIEW && 'BroadcastChannel' in window) {
+    bc = new BroadcastChannel('prfmais-keynote');
+    bc.onmessage = (e) => { if (e.data && e.data.type === 'goto') { suppress = true; show(e.data.i); suppress = false; } };
+  }
+  let i = Math.min(parseInt(location.hash.slice(1)) || 0, slides.length - 1);
+
+  function show(n) {
+    i = Math.max(0, Math.min(n, slides.length - 1));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    progress.style.width = ((i + 1) / slides.length * 100) + '%';
+    counter.textContent = (i + 1) + ' / ' + slides.length;
+    if (String(location.hash.slice(1)) !== String(i)) location.hash = i;
+    if (bc && !suppress) bc.postMessage({ type: 'goto', i: i });
+  }
+
+  addEventListener('hashchange', () => { const n = parseInt(location.hash.slice(1)) || 0; if (n !== i) show(n); });
+
+  addEventListener('keydown', e => {
+    if (PREVIEW) return;
+    if (['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)) { e.preventDefault(); show(i + 1); }
+    else if (['ArrowLeft','ArrowUp','PageUp'].includes(e.key)) { e.preventDefault(); show(i - 1); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 't') document.body.classList.toggle('tp-hidden');
+    else if (e.key.toLowerCase() === 'f') {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
+  });
+
+  let touchX = null;
+  addEventListener('touchstart', e => { if (PREVIEW) return; touchX = e.touches[0].clientX; });
+  addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1));
+    touchX = null;
+  });
+  addEventListener('click', e => { if (PREVIEW) return; if (!e.target.closest('a')) show(i + 1); });
+
+  show(i);
+</script>
+
+</body>
+</html>

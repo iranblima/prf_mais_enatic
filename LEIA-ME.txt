@@ -1,0 +1,25 @@
+PRF+ — Apresentação de lançamento (v1.2)
+=========================================
+
+COMO ABRIR
+  Dê dois cliques em "Apresentacao-Publico.html".
+  Abre em qualquer navegador moderno (Chrome, Edge, Safari, Firefox),
+  sem internet e sem instalar nada.
+
+ARQUIVOS
+  Apresentacao-Publico.html ........ versão para exibir ao público (telão)
+  Apresentacao-Apresentador.html ... versão com notas do apresentador
+  img/ ............................. imagens usadas nos slides (não apagar)
+
+NAVEGAÇÃO
+  → / ← ou espaço ..... avançar / voltar slides
+  F ................... tela cheia (recomendado no telão)
+
+MODO APRESENTADOR (opcional, 2 telas)
+  Abra os dois arquivos no MESMO navegador: o Público no telão
+  e o Apresentador no notebook. Em geral eles sincronizam sozinhos;
+  se o navegador não sincronizar ao abrir direto do arquivo,
+  basta avançar os dois em paralelo (mesmas teclas).
+
+IMPORTANTE
+  Mantenha os arquivos juntos na mesma pasta (inclusive a pasta img/).
