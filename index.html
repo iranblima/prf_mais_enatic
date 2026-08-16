@@ -164,7 +164,7 @@
 
   /* phone mock */
   .phone {
-    width:clamp(150px, 15vw, 230px); aspect-ratio: 921/2000; /* iPhone 17 Pro Max */
+    width:clamp(150px, 14vw, 220px); aspect-ratio: 921/2000; /* iPhone 17 Pro Max */
     border-radius:36px; border:3px solid rgba(255,255,255,.22);
     background:linear-gradient(170deg, #101632, #1c1040 55%, #3d1140);
     box-shadow: 0 40px 120px rgba(139,92,246,.35), inset 0 0 60px rgba(94,162,255,.12);
@@ -178,6 +178,8 @@
     content:""; position:absolute; top:12px; left:50%; transform:translateX(-50%);
     width:34%; height:14px; border-radius:10px; background:rgba(0,0,0,.7); z-index:2;
   }
+  .phone.sm { width:clamp(120px, 10.5vw, 175px); margin-top:0; }
+  .phone-row { display:flex; gap:3.4vw; justify-content:center; align-items:center; margin-top:3.2vh; }
   .phone .logo {
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
     font-size:clamp(30px,3.4vw,52px); font-weight:800; letter-spacing:-.03em;
@@ -570,6 +572,29 @@
 <!-- ANTIGÃO · TEASER -->
 <section class="slide">
   <h1 style="font-size:clamp(56px,10vw,180px);"><span class="grad-warm">Antigão</span></h1>
+</section>
+
+<!-- ANTIGÃO · DEMO VOZ -->
+<section class="slide">
+  <div class="kicker">Demonstração</div>
+  <div style="display:flex; align-items:center; justify-content:center; gap:5vw; margin-top:1vh;">
+    <div class="phone" style="margin-top:0;"><img src="img/antigao-home.png" alt="Tela inicial do Antigão"></div>
+    <div style="max-width:560px; text-align:left;">
+      <h2 style="font-size:clamp(28px,3.4vw,54px); margin:0;">«Criança menor de dois anos sendo transportada <span class="grad-warm">sem cadeirinha</span>.»</h2>
+      <p class="sub" style="margin-top:2.4vh;">Um prompt de voz. Linguagem natural, do jeito que o policial fala na fiscalização.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ANTIGÃO · RESULTADO -->
+<section class="slide">
+  <div class="kicker">Resultado</div>
+  <h2>10 enquadramentos <span class="grad-warm">encontrados.</span></h2>
+  <div class="phone-row">
+    <div class="phone sm"><img src="img/antigao-voz.png" alt="Antigão ouvindo o prompt de voz"></div>
+    <div class="phone sm"><img src="img/antigao-lista.png" alt="Lista de enquadramentos encontrados"></div>
+    <div class="phone sm"><img src="img/antigao-detalhe.png" alt="Detalhe do enquadramento com instrução de fiscalização"></div>
+  </div>
 </section>
 
 <!-- ANTIGÃO · REVELAÇÃO -->
