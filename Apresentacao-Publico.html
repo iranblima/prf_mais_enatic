@@ -52,6 +52,7 @@
     pointer-events:none; text-align:center;
   }
   section.slide.active { opacity:1; transform:none; pointer-events:auto; }
+  section.slide.hidden { display:none; }
 
   .kicker {
     font-size: clamp(13px, 1.15vw, 18px);
@@ -447,12 +448,12 @@
 <!-- 20 · DEVOPS -->
 <section class="slide">
   <div class="kicker">Esteira DevOps</div>
-  <h2>Do commit ao campo,<br><span class="grad-cool">sem intervenção manual.</span></h2>
+  <h2>Do commit à pista,<br><span class="grad-cool">sem intervenção manual.</span></h2>
   <div class="bento cols-4">
     <div class="cell"><span class="ico"><svg><use href="#i-refresh"/></svg></span><span class="mid">Entrega automatizada</span><span class="lbl">Do repositório à produção, sem passos manuais</span></div>
     <div class="cell"><span class="ico"><svg><use href="#i-shield-check"/></svg></span><span class="mid">Segurança contínua</span><span class="lbl">Análise automática de vulnerabilidades em cada versão</span></div>
     <div class="cell"><span class="ico"><svg><use href="#i-tag"/></svg></span><span class="mid">Rastreabilidade total</span><span class="lbl">Do planejamento à entrega em produção</span></div>
-    <div class="cell"><span class="ico"><svg><use href="#i-box"/></svg></span><span class="mid">Entregas semanais</span><span class="lbl">Novidades consolidadas a cada janela</span></div>
+    <div class="cell"><span class="ico"><svg><use href="#i-box"/></svg></span><span class="mid">CI/CD</span><span class="lbl">Ciclo contínuo de integração e entrega</span></div>
   </div>
 </section>
 
@@ -494,7 +495,7 @@
 </section>
 
 <!-- 25 · COMPARATIVO -->
-<section class="slide">
+<section class="slide hidden">
   <h2>Legado <span style="color:var(--faint)">vs</span> <span class="grad">PRF+</span></h2>
   <div class="versus">
     <div class="vcard old">
@@ -522,7 +523,7 @@
 </section>
 
 <!-- 26 · NÚMEROS DO PROJETO -->
-<section class="slide">
+<section class="slide hidden">
   <div class="kicker">O projeto em números</div>
   <div class="bento cols-4" style="margin-top:2vh;">
     <div class="cell hero-cell"><span class="big grad-cool">36%</span><span class="lbl">de economia em horas de desenvolvimento vs. manter sistemas separados</span></div>
@@ -650,7 +651,8 @@
 </footer>
 
 <script>
-  const slides = [...document.querySelectorAll('.slide')];
+  const allSlides = [...document.querySelectorAll('.slide')];
+  const slides = allSlides.filter(s => !s.classList.contains('hidden'));
   const progress = document.getElementById('progress');
   const counter = document.getElementById('counter');
   const PREVIEW = location.search.indexOf('role=preview') !== -1;
@@ -665,7 +667,8 @@
 
   function show(n) {
     i = Math.max(0, Math.min(n, slides.length - 1));
-    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    allSlides.forEach(s => s.classList.remove('active'));
+    slides[i]?.classList.add('active');
     progress.style.width = ((i + 1) / slides.length * 100) + '%';
     counter.textContent = (i + 1) + ' / ' + slides.length;
     if (String(location.hash.slice(1)) !== String(i)) location.hash = i;
